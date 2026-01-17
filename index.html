@@ -2,115 +2,114 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>🎰 ماكينة شدّات ببجي</title>
-
+<title>🎰 ماكينة شدات ببجي</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <style>
 body{
   margin:0;
-  background:radial-gradient(circle at top,#020617,#000);
+  padding:0;
+  font-family:sans-serif;
+  background:#0a0a0a;
   color:#fff;
-  font-family:Tahoma;
-  text-align:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  height:100vh;
   overflow:hidden;
+  text-align:center;
 }
 h1{
+  margin:10px 0;
+  font-size:22px;
   color:#22c55e;
-  text-shadow:0 0 35px #22c55e;
-  margin-top:20px;
+  text-shadow:0 0 15px #22c55e;
 }
 .sub{
-  color:#facc15;
-  margin-top:5px;
+  color:#a3e635;
   font-size:14px;
+  margin-bottom:10px;
 }
 input{
   padding:12px;
-  width:230px;
-  border-radius:14px;
-  border:none;
+  width:250px;
   font-size:16px;
   text-align:center;
-  margin-top:18px;
+  border:none;
+  border-radius:12px;
+  margin:8px 0;
 }
 .machine{
   display:flex;
   justify-content:center;
-  gap:15px;
-  margin:30px 0;
+  gap:10px;
+  margin:20px 0;
+  height:120px;
+  overflow:hidden;
 }
 .slot{
-  width:95px;
-  height:95px;
-  background:#000;
-  border-radius:18px;
-  box-shadow:0 0 40px #22c55e;
+  width:70px;
+  height:100%;
+  background:#111;
+  border-radius:12px;
+  box-shadow:0 0 20px #22c55e;
   display:flex;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
-  font-size:22px;
+  font-size:24px;
   font-weight:bold;
   color:#22c55e;
+  overflow:hidden;
+  position:relative;
 }
-.spin{ animation: shake 0.12s infinite; }
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(4px)}
-  50%{transform:translateX(-4px)}
-  75%{transform:translateX(4px)}
-  100%{transform:translateX(0)}
+.slot div{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  text-align:center;
 }
 button{
-  padding:16px 45px;
+  padding:14px 40px;
   font-size:18px;
   border:none;
-  border-radius:25px;
+  border-radius:20px;
   background:linear-gradient(45deg,#22c55e,#4ade80);
   color:#000;
   cursor:pointer;
-  box-shadow:0 0 30px #22c55e;
+  margin-top:8px;
+  box-shadow:0 0 20px #22c55e;
 }
 #result{
-  margin-top:18px;
-  font-size:17px;
-  line-height:1.6;
-}
-.counter{
-  margin-top:8px;
-  color:#94a3b8;
-  font-size:13px;
+  margin-top:15px;
+  font-size:16px;
+  line-height:1.4;
 }
 .confetti{
   position:absolute;
-  top:-20px;
-  font-size:26px;
-  animation: fall linear forwards;
+  font-size:24px;
+  top:-30px;
+  animation:fall linear forwards;
 }
 @keyframes fall{
   to{ transform:translateY(110vh) rotate(360deg); }
 }
-a{
-  color:#22c55e;
-  font-weight:bold;
-  text-decoration:none;
-}
+a{ color:#22c55e; text-decoration:none; font-weight:bold;}
 </style>
 </head>
-
 <body>
 
-<h1>🎰 ماكينة شدّات ببجي</h1>
-<div class="sub">🔥 أول يوم فوز مضمون – محاولة واحدة يوميًا</div>
+<h1>🎰 ماكينة شدات ببجي</h1>
+<div class="sub">لا يمكن اللعب إلا بعد الاشتراك في التليجرام والواتساب</div>
 
 <input id="playerId" type="number" placeholder="ادخل ID ببجي">
 
 <div class="machine">
-  <div id="s1" class="slot">❓</div>
-  <div id="s2" class="slot">❓</div>
-  <div id="s3" class="slot">❓</div>
+  <div id="s1" class="slot"><div>❓</div></div>
+  <div id="s2" class="slot"><div>❓</div></div>
+  <div id="s3" class="slot"><div>❓</div></div>
 </div>
 
 <button onclick="spin()">لف الماكينة</button>
-<div class="counter" id="counter"></div>
 
 <p id="result"></p>
 
@@ -120,15 +119,18 @@ a{
 <audio id="laughSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-laugh-voice-633.mp3"></audio>
 
 <script>
+const prizes=["2000","6600","12200","14500"];
+const s1=document.querySelector("#s1 div");
+const s2=document.querySelector("#s2 div");
+const s3=document.querySelector("#s3 div");
+
 window.onload=()=>{
   let msg=new SpeechSynthesisUtterance(
-    "اهلا بك. اول يوم فوز مضمون. لا تضيع فرصتك."
+    "اهلا بك في ماكينة شدات ببجي. الاشتراك في التليجرام والواتساب إجباري للفوز. ادخل الاي دي الخاص بك."
   );
   msg.lang="ar-EG";
   speechSynthesis.speak(msg);
 };
-
-const prizes=["2000","6600","12200","14500"];
 
 function spin(){
   const id=document.getElementById("playerId").value.trim();
@@ -137,67 +139,75 @@ function spin(){
     return;
   }
 
-  const today=new Date().toDateString();
-  const dayKey="day_"+id;
-  const playedKey="played_"+id;
-
-  if(localStorage.getItem(playedKey)===today){
-    result.innerText="❌ استخدمت محاولتك النهارده";
+  // التحقق من الاشتراك
+  const subscribed=confirm("⚠️ يجب الاشتراك في التليجرام والواتساب. هل قمت بالاشتراك؟");
+  if(!subscribed){
+    result.innerText="❌ الاشتراك اجباري قبل اللعب";
     return;
   }
-  localStorage.setItem(playedKey,today);
+
+  const today=new Date().toDateString();
+  const key="spin_"+id;
+  if(localStorage.getItem(key)===today){
+    result.innerText="❌ لعبت النهارده خلاص";
+    return;
+  }
+  localStorage.setItem(key,today);
 
   navigator.vibrate && navigator.vibrate([200,100,200,100,300]);
   spinSound.play();
 
-  s1.classList.add("spin");
-  s2.classList.add("spin");
-  s3.classList.add("spin");
+  s1.style.bottom="-100%";
+  s2.style.bottom="-100%";
+  s3.style.bottom="-100%";
 
-  setTimeout(()=>{
-    s1.classList.remove("spin");
-    s2.classList.remove("spin");
-    s3.classList.remove("spin");
-
-    // 🧠 أول يوم فوز مضمون
-    let firstTime = !localStorage.getItem(dayKey);
-    localStorage.setItem(dayKey,"yes");
-
-    if(firstTime){
-      winPrize();
-    }else{
-      // قرب فوز يحمس
-      const p=prizes[Math.floor(Math.random()*prizes.length)];
-      s1.innerText=p;
-      s2.innerText=p;
-      s3.innerText="❌";
-      result.innerText="😮 كنت قريب جدًا! بكرة حظك أقوى";
+  // تحريك الأرقام من أسفل لأعلى
+  let stop=false;
+  let count=0;
+  const interval=setInterval(()=>{
+    s1.innerText=prizes[Math.floor(Math.random()*prizes.length)];
+    s2.innerText=prizes[Math.floor(Math.random()*prizes.length)];
+    s3.innerText=prizes[Math.floor(Math.random()*prizes.length)];
+    s1.style.bottom=Math.random()*100+"%";
+    s2.style.bottom=Math.random()*100+"%";
+    s3.style.bottom=Math.random()*100+"%";
+    count++;
+    if(count>25){
+      clearInterval(interval);
+      // فوز مضمون أول يوم
+      const firstTime=!localStorage.getItem("firstWin_"+id);
+      if(firstTime){
+        localStorage.setItem("firstWin_"+id,"yes");
+        win();
+      }else{
+        // 90% فوز بعد الأول
+        if(Math.random()<0.9){ win(); }
+        else{ lose(); }
+      }
     }
-  },1500);
+  },70);
 }
 
-function winPrize(){
+function win(){
   const prize=prizes[Math.floor(Math.random()*prizes.length)];
   s1.innerText=prize;
   s2.innerText=prize;
   s3.innerText=prize;
 
-  result.innerHTML=
-    `🔥 مبروك! فزت بـ ${prize} شدّة<br><br>
-     <b>لاستلام الجائزة اشترك 👇</b><br>
-     <a href="https://t.me/Potr01" target="_blank">📢 تليجرام</a><br>
-     <a href="https://chat.whatsapp.com/DUS3Tw1UKqhICikuwxKnvs" target="_blank">💬 واتساب</a>`;
+  result.innerHTML=`🔥 مبروك! فزت بـ ${prize} شدّة<br>
+  <b>لاستلام الجائزة اشترك 👇</b><br>
+  <a href="https://t.me/Potr01" target="_blank">📢 تليجرام</a><br>
+  <a href="https://chat.whatsapp.com/DUS3Tw1UKqhICikuwxKnvs" target="_blank">💬 واتساب</a>`;
 
   clapSound.play();
   laughSound.play();
 
-  let winMsg=new SpeechSynthesisUtterance(
-    "مبروك! اول يوم حظك عالي جدا."
-  );
+  let winMsg=new SpeechSynthesisUtterance("مبروك! لقد فزت بشدات ببجي.");
   winMsg.lang="ar-EG";
   speechSynthesis.speak(winMsg);
 
-  for(let i=0;i<45;i++){
+  // هدايا تنزل من فوق
+  for(let i=0;i<40;i++){
     let c=document.createElement("div");
     c.className="confetti";
     c.innerText="🎁";
@@ -206,6 +216,13 @@ function winPrize(){
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),5000);
   }
+}
+
+function lose(){
+  s1.innerText="❌";
+  s2.innerText="❌";
+  s3.innerText="❌";
+  result.innerText="😔 لم يحالفك الحظ هذه المرة! جرب بكرة";
 }
 </script>
 
